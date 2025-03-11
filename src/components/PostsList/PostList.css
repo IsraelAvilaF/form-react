@@ -1,0 +1,48 @@
+.post-list{
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid yellowgreen;
+    max-width: 768px;
+    margin: 0 auto;
+
+    .post-container{
+        padding: 1rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+
+        .post-header{
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: .5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid dodgerblue;
+            h2{
+                line-height: 1;
+            }
+        }
+
+        .post-date{
+            font-size: 10px;
+            color: #666;
+        }
+
+        .post-user{
+            font-size: 14px;
+            color: dodgerblue;
+            line-height: 1;
+        }
+    }
+
+    .post-footer{
+        .buttons-container{
+            padding: .5rem 0 0 3rem;
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+            border-top: 1px solid #666;
+            width: min-content;
+            margin-left: auto;
+            margin-top: .5rem;
+        }
+    }
+}

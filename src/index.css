@@ -1,0 +1,94 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1{
+  text-align: center;
+}
+
+.post-form {
+  display: grid;
+  gap: .5rem;
+  width: max(20rem, 70%);
+  margin: 2rem auto;
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 0.125rem;
+      font-size: 11px;
+      color: dodgerblue;
+    }
+    input, textarea {
+      padding: 0.5rem;
+      border: 1px solid rgba(153, 205, 50, 0.418);
+      border-radius: 0.25rem;
+      color: #DDD;
+    }
+
+    .error{
+      color: #ff0033;
+      font-size: 0.75rem;
+    }
+  }
+  button {
+    padding: 0.5rem;
+    border: 1px solid rgba(153, 205, 50, 0.418);
+    border-radius: 0.25rem;
+    background-color: rgb(153, 205, 50);
+    color: #242424;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(153, 205, 50, 0.8);
+    }
+
+    &:disabled{
+      pointer-events: none;
+      filter: grayscale(1) opacity(.5);
+    }
+  }
+}
+
+button{
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+.button-xs{
+  padding: .125rem 0;
+  width: 20px;
+  background-color: yellowgreen;
+  border-radius: 2px;
+
+  &:hover{
+      background-color: hsl(80,61%,35%);
+  }
+
+  &.button-danger{
+      background-color: #fa3d63;
+
+      &:hover{
+          background-color: hsl(348,95%,51%);
+      }
+  }
+
+  
+}
