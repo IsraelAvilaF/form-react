@@ -1,7 +1,7 @@
 import './PostList.css'
 import Post from "../Post/Post"
 
-export default function PostsList({posteos, markAsRead, deletePost}) {
+export default function PostsList({posteos, markAsRead, deletePost, updateProduct}) {
     return (
             // #Devuelve un componente con la informacion de cada post
         <div className="post-list">
@@ -9,7 +9,8 @@ export default function PostsList({posteos, markAsRead, deletePost}) {
                 (<Post  key={post.id} 
                         post={post} 
                         markAsRead={markAsRead} 
-                        deletePost={deletePost}/>
+                        deletePost={deletePost}
+                        updateProduct={updateProduct}/>
                 )
                 )
             }

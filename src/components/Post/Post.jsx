@@ -1,8 +1,8 @@
-import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faEdit, faEye } from "@fortawesome/free-regular-svg-icons";
 import { faBan, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Post({post, markAsRead, deletePost}) {
+export default function Post({post, markAsRead, deletePost, updateProduct}) {
     return (
         <div className={`post-container ${post.alreadyRead ? 'leido' : ''}`} key={post.id}>
             <div className="post-header">
@@ -20,6 +20,12 @@ export default function Post({post, markAsRead, deletePost}) {
             </div>
             <div className="post-footer">
                 <div className="buttons-container">
+
+                    <button className='button-xs button-info'
+                            title="Editar"
+                            onClick={() => updateProduct(post)}>
+                        <FontAwesomeIcon icon={faEdit}/>
+                    </button>
                     <button className='button-xs'
                             title="Marcar como leido"
                             onClick={() => markAsRead(post.id)}>

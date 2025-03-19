@@ -8,14 +8,31 @@ const URL = "https://67cb831e3395520e6af58918.mockapi.io/"
 
 function App() {
 
-  const{register, handleSubmit, formState:{errors, isValid}} = useForm();
-
   const [posts,setPosts] = useState([]);
+  const[editProduct, setEditProduct] = useState(null);
+  const{register, handleSubmit, setValue, reset, formState:{errors, isValid}} = useForm();
 
   //El hook useEffect se ejecuta cuando el componente se monta y se me permite ejecutar el código que defino dentro de el de manera controlada y en el momento que yo quiera en base a las dependencias que le paso como segundo argumento
   useEffect(() => {
     getPosts()
   }, []);
+
+  useEffect(() => {
+      //Actualizar el formulario ya sea llenando los cambios o borrandolos
+      // Tareas que quiero realizar
+      if(editProduct){
+      setValue(`title`, editProduct ?. title)
+      setValue(`user`, editProduct ?. user)
+      setValue(`description`, editProduct ?. description)
+      } else {
+        reset()
+      }
+      
+    }, [editProduct]);
+
+  async function updateProduct(posteo){
+    setEditProduct(posteo)
+  }
 
   async function getPosts(){
     try{
@@ -43,25 +60,54 @@ function App() {
   //Función para agregar posts
   async function addPost(data){
     try {
-      console.log(data)
-      // #Creamos el nuevo post en base a la data del formulario
-      const newPost ={
-      title: data.title,
-      user: data.user,
-      description: data.description,
-      alreadyRead: false,
-      active: true,
-      createdAt: new Date().toISOString
-    }
+      if(editProduct){
+        //logica para editar el post
+        const id = editProduct.id;
 
-    await axios.post(`${URL}/posts`, newPost)
+        const postToUpdate = {
+          title: data.title,
+          user: data.user,
+          description: data.description,
+        }
 
-    // getPosts()
-    setPosts([...posts, newPost])
+          const response = await axios.put(`${URL}/posts/${id}`, postToUpdate)
+
+          console.log(response.data)
+
+          // Actualizamos el estado de posts
+          // getPosts()
+
+          //#Forma 2
+          const postCopy = [...posts];
+          const index = postCopy.findIndex(post => post.id === id)
+          postCopy[index] = response.data;
+          setPosts(postCopy);
+          setEditProduct(null) // Seteamos nulo el estado de post que estabamos editando
+          
+      } else{
+        // #Creamos el nuevo post en base a la data del formulario
+        const newPost ={
+          title: data.title,
+          user: data.user,
+          description: data.description,
+          alreadyRead: editProduct?.alreadyRead,
+          active: true,
+          createdAt: new Date().toISOString
+          }
+  
+          await axios.post(`${URL}/posts`, newPost)
+  
+          // getPosts()
+          setPosts([...posts, newPost])
+          reset()
+      }
+
+      // Hacer foco en el input title
+      document.getElementById(`title`).focus();
 
     } catch (error) {
-      console.log(error);
-      alert(`No se pudo crear el post`)
+          console.log(error);
+          alert(`No se pudo crear el post`)
     }
 
     // // #Hacemos una copia del array del post
@@ -141,14 +187,17 @@ function App() {
         </div>
 
         <button className="button" type="submit" disabled={!isValid}>
-          Crear
+          {editProduct ? `Actualizar Post` : `Crear Post`}
         </button>
 
       </form>
 
       <Title titulo="Post creados"/>
 
-      <PostsList posteos={posts} markAsRead={markAsRead} deletePost={deletePost}/>
+      <PostsList  posteos={posts} 
+                  markAsRead={markAsRead} 
+                  deletePost={deletePost}
+                  updateProduct={updateProduct}/>
     </>
   )
 }
